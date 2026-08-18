@@ -46,6 +46,8 @@ Flags: `--user-agents` (install to `~/.agents/skills` instead — shared with ot
 
 Rank 400 (`~/.dsh/skills`) shadows an older copy of the same names in `~/.agents/skills` (rank 500), so this pack wins over any pre-existing upstream install. Use one channel; if you install both, the bundle and the directory copy will tie within the same layer.
 
+> **Windows troubleshooting**: if `dsh plugin` reports `pnpm not found` / `'pnpm' 不是内部或外部命令` although `where pnpm` finds it, your `PATH` is too long — `cmd.exe` ignores entries deep in a long `PATH` when resolving commands. Move pnpm's directory (`npm prefix -g`) earlier in `PATH` (or prune duplicate/stale entries), or run dsh through pnpm (`pnpm dsh plugin …` from a pnpm-enabled workspace), which prepends pnpm's directory for its children.
+
 ### Option 3 — just ask your agent
 
 Tell any dsh session:

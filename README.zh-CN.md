@@ -46,6 +46,8 @@ powershell -ExecutionPolicy Bypass -File scripts\install.ps1
 
 rank 400（`~/.dsh/skills`）会遮蔽 `~/.agents/skills`（rank 500）里的同名旧版，所以本适配包优先于任何已装的原版。两种方式选其一；若同时安装，bundle 与目录副本会在同层内打平。
 
+> **Windows 排障**：如果 `dsh plugin` 报 `pnpm not found` / `'pnpm' 不是内部或外部命令`，但 `where pnpm` 又能找到，说明你的 `PATH` 太长——`cmd.exe` 解析命令时会忽略长 `PATH` 深处的条目。把 pnpm 所在目录（`npm prefix -g`）在 `PATH` 里前移（或清理重复/失效条目）；或者从 pnpm 可用的环境里经 `pnpm dsh plugin …` 运行——pnpm 会把自己的目录提到子进程 `PATH` 前端。
+
 ### 方式 3 —— 直接对你的 agent 说
 
 对任意 dsh 会话说：

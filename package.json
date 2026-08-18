@@ -1,0 +1,45 @@
+{
+  "name": "dsh-mattpocock-skills",
+  "version": "0.1.0",
+  "description": "Matt Pocock's engineering skills (grilling, spec/ticket flows, TDD, code review, domain modelling), adapted for DeepSeek Harness (dsh).",
+  "type": "module",
+  "main": "src/index.js",
+  "files": [
+    "skills/",
+    "src/",
+    "cordis.patch.yml",
+    "scripts/install.sh",
+    "scripts/install.ps1",
+    "README.md",
+    "README.zh-CN.md",
+    "PROVENANCE.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "lint:skills": "node scripts/lint-skills.mjs"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "skills",
+    "agent",
+    "grilling",
+    "tdd",
+    "code-review",
+    "domain-modeling"
+  ],
+  "author": "Matt Pocock (original skills) <https://www.aihero.dev>",
+  "contributors": [
+    "dsh-mattpocock-skills adapters (see PROVENANCE.md)"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-name/dsh-mattpocock-skills.git"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

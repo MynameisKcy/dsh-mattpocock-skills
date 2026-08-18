@@ -1,0 +1,4 @@
+# Normalize to LF in the repository and on checkout: bash scripts and skill
+# bodies must not acquire CRLF on Windows checkouts.
+* text=auto eol=lf
+*.png binary

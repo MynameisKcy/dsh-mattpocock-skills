@@ -8,13 +8,23 @@ The bodies were rewritten for dsh's tool surface (`skill`, `subagent`, session c
 
 ## Install
 
+**Prerequisite**: the `dsh` CLI. Either install it globally once and use `dsh …` as written below:
+
+```sh
+npm install -g @deepseek-ai/dsh
+```
+
+or prefix every command with `npx -y @deepseek-ai/dsh` — no install, but the first run downloads the whole CLI and is slow.
+
 ### Option 1 — one command via `dsh plugin` (recommended)
 
 ```sh
 dsh plugin --profile web add dsh-mattpocock-skills
+# no global dsh installed? same command via npx:
+npx -y @deepseek-ai/dsh plugin --profile web add dsh-mattpocock-skills
 ```
 
-That is a pnpm install into the profile plus layer activation; verify with `dsh --profile web --dump-config` (a `# == dsh-mattpocock-skills` layer appears), then start a session on that profile. Works from npm, or pre-publish from git:
+That is a pnpm install into the profile plus layer activation; verify with `dsh --profile web --dump-config` (a `# == dsh-mattpocock-skills` layer appears), then start a session on that profile. Works from npm, or from git:
 
 ```sh
 dsh plugin --profile web add github:MynameisKcy/dsh-mattpocock-skills

@@ -13,7 +13,9 @@ The user's dsh version determines nothing about these steps — all channels wor
    dsh plugin --profile <name> add github:<owner>/dsh-mattpocock-skills   # from git
    ```
 
-   Verify with `dsh --profile <name> --dump-config` — a `# == dsh-mattpocock-skills` layer must appear. Requires the `dsh` CLI on PATH.
+   If `dsh` is not a global command, run the same through the CLI package: `npx -y @deepseek-ai/dsh plugin --profile <name> add dsh-mattpocock-skills` (first run downloads the CLI; or install it once with `npm install -g @deepseek-ai/dsh`).
+
+   Verify with `dsh --profile <name> --dump-config` — a `# == dsh-mattpocock-skills` layer must appear.
 
 2. **Fallback — directory drop (all profiles, no CLI needed):** from this repository's root:
 

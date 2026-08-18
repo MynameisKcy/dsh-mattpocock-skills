@@ -8,13 +8,23 @@
 
 ## 安装
 
+**前置条件**：`dsh` CLI。全局装一次，之后按下面写的 `dsh …` 使用：
+
+```sh
+npm install -g @deepseek-ai/dsh
+```
+
+或者给每条命令加 `npx -y @deepseek-ai/dsh` 前缀——免安装，但首次运行要下载整个 CLI，较慢。
+
 ### 方式 1 —— `dsh plugin` 一行命令（推荐）
 
 ```sh
 dsh plugin --profile web add dsh-mattpocock-skills
+# 没装全局 dsh？用 npx 跑同一条命令：
+npx -y @deepseek-ai/dsh plugin --profile web add dsh-mattpocock-skills
 ```
 
-这是向 profile 内做一次 pnpm 安装并激活配置层；用 `dsh --profile web --dump-config` 验证（会出现 `# == dsh-mattpocock-skills` 层），然后在该 profile 上开启会话。npm 与 git 源均可，发布前的 git 直装：
+这是向 profile 内做一次 pnpm 安装并激活配置层；用 `dsh --profile web --dump-config` 验证（会出现 `# == dsh-mattpocock-skills` 层），然后在该 profile 上开启会话。npm 与 git 源均可：
 
 ```sh
 dsh plugin --profile web add github:MynameisKcy/dsh-mattpocock-skills

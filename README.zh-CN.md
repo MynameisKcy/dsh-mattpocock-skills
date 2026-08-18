@@ -17,7 +17,7 @@ dsh plugin --profile web add dsh-mattpocock-skills
 这是向 profile 内做一次 pnpm 安装并激活配置层；用 `dsh --profile web --dump-config` 验证（会出现 `# == dsh-mattpocock-skills` 层），然后在该 profile 上开启会话。npm 与 git 源均可，发布前的 git 直装：
 
 ```sh
-dsh plugin --profile web add github:<你>/dsh-mattpocock-skills
+dsh plugin --profile web add github:MynameisKcy/dsh-mattpocock-skills
 ```
 
 技能随包携带（由插件以 rank 400 注册），无需其他配置。
@@ -25,7 +25,7 @@ dsh plugin --profile web add github:<你>/dsh-mattpocock-skills
 ### 方式 2 —— 投递到技能根目录（不经 bundle，全部 profile 生效）
 
 ```sh
-git clone https://github.com/<你>/dsh-mattpocock-skills
+git clone https://github.com/MynameisKcy/dsh-mattpocock-skills
 cd dsh-mattpocock-skills
 bash scripts/install.sh            # macOS / Linux / Git Bash → $DSH_HOME/skills（~/.dsh/skills）
 # Windows PowerShell：

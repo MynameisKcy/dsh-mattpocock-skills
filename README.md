@@ -17,7 +17,7 @@ dsh plugin --profile web add dsh-mattpocock-skills
 That is a pnpm install into the profile plus layer activation; verify with `dsh --profile web --dump-config` (a `# == dsh-mattpocock-skills` layer appears), then start a session on that profile. Works from npm, or pre-publish from git:
 
 ```sh
-dsh plugin --profile web add github:<you>/dsh-mattpocock-skills
+dsh plugin --profile web add github:MynameisKcy/dsh-mattpocock-skills
 ```
 
 The bundle carries its skills inside the package (a plugin registers them at rank 400), so nothing else is needed.
@@ -25,7 +25,7 @@ The bundle carries its skills inside the package (a plugin registers them at ran
 ### Option 2 — drop into a skill root (no bundle, every profile)
 
 ```sh
-git clone https://github.com/<you>/dsh-mattpocock-skills
+git clone https://github.com/MynameisKcy/dsh-mattpocock-skills
 cd dsh-mattpocock-skills
 bash scripts/install.sh            # macOS / Linux / Git Bash → $DSH_HOME/skills (~/.dsh/skills)
 # Windows PowerShell:

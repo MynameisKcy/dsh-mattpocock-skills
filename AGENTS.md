@@ -27,18 +27,31 @@ If this clone is the user's own checkout, install from the local path: `dsh plug
 
 After installing either way, tell the user: new sessions pick the skills up automatically; to start, run `/setup-matt-pocock-skills` once in the target repo, then `/ask-matt`.
 
+**Use one channel, not both.** The bundle registers its skill provider at rank 400, which ties with the user-level `~/.dsh/skills` root (also 400); a tie is broken by provider registration order, so which copy wins is an implementation detail. Installing the bundle and dropping the same skills into `~/.dsh/skills` leaves every shared name decided by that tie.
+
 ## Repository layout
 
-- `skills/` — the 25 adapted skills (`<name>/SKILL.md`, dsh format)
+- `skills/` — the 27 adapted skills (`<name>/SKILL.md`, dsh format)
 - `src/index.js` + `cordis.patch.yml` + `package.json` — the dsh bundle (registers a rank-400 skill provider over `skills/`)
-- `scripts/install.sh`, `scripts/install.ps1` — directory-drop installers; `scripts/lint-skills.mjs` — format validation
+- `scripts/install.sh`, `scripts/install.ps1` — directory-drop installers
+- `scripts/verify-skills.mjs` — frontmatter contract and adaptation checks; run before committing
+- `scripts/sync-upstream.mjs` — re-sync from upstream (three-way merge + adaptation rules); see PROVENANCE.md
 - `PROVENANCE.md` — pinned upstream commit and the adaptation rules; read it before editing skill bodies
 - `README.md` / `README.zh-CN.md` — install and usage documentation
 
 ## Conventions when editing skills
 
-- Frontmatter stays the flat dsh subset: `name`, `description`, `disable-model-invocation`, `user-invocable`. No `argument-hint`, no `agents/openai.yaml`.
+- Frontmatter stays the flat dsh subset: `name`, `description`, `disable-model-invocation`, `user-invocable`. No `argument-hint`, no `agents/openai.yaml`, and no nested block such as upstream `pr`'s `metadata:` — dsh's loader parses flat `key: value` only.
 - Model-facing instructions load other skills via the `skill` tool ("call the `skill` tool with name `x`"); `/name` slash syntax is reserved for text the user types (a valid dsh gesture for every skill here).
 - Subagents are spawned with the `subagent` tool; parallel means several calls in one message, background means `run_in_background: true`.
 - `/compact` is a real dsh command; there is no `/clear` — write "start a new session" instead.
-- Keep all 25 skill names identical to upstream (shadowing and re-sync depend on it). Run `node scripts/lint-skills.mjs` before committing.
+- Keep all 27 skill names identical to upstream (shadowing and re-sync depend on it). Run `node scripts/verify-skills.mjs` before committing.
+
+## Re-syncing from upstream
+
+```sh
+node scripts/sync-upstream.mjs --ours skills --out skills --to HEAD
+node scripts/verify-skills.mjs
+```
+
+The script shallow-fetches the pinned commit (recorded in `.upstream.json`) and the target, three-way merges every promoted skill, re-applies the adaptation rules encoded in the script, and writes `.sync-conflicts.md` listing every block it resolved by taking upstream's side. Review that report, then verify. `--prune` also removes skills upstream dropped; without it they are kept and reported.

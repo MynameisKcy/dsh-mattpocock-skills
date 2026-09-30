@@ -1,7 +1,7 @@
 {
   "name": "dsh-mattpocock-skills",
-  "version": "0.1.1",
-  "description": "Matt Pocock's engineering skills (grilling, spec/ticket flows, TDD, code review, domain modelling), adapted for DeepSeek Harness (dsh).",
+  "version": "0.2.0",
+  "description": "Matt Pocock's engineering skills (grilling, spec/ticket flows, TDD, code review, domain modelling), adapted for DeepSeek Harness (dsh). Synced to upstream d81f3a1 — 27 skills.",
   "type": "module",
   "main": "src/index.js",
   "files": [
@@ -10,13 +10,16 @@
     "cordis.patch.yml",
     "scripts/install.sh",
     "scripts/install.ps1",
+    "scripts/sync-upstream.mjs",
+    "scripts/verify-skills.mjs",
     "README.md",
     "README.zh-CN.md",
     "PROVENANCE.md",
     "LICENSE"
   ],
   "scripts": {
-    "lint:skills": "node scripts/lint-skills.mjs"
+    "verify:skills": "node scripts/verify-skills.mjs",
+    "sync:upstream": "node scripts/sync-upstream.mjs"
   },
   "keywords": [
     "dsh",

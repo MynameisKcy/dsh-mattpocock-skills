@@ -2,3 +2,9 @@
 node_modules/
 package-lock.json
 pnpm-lock.yaml
+
+# Upstream git cache created by scripts/sync-upstream.mjs
+.upstream-cache/
+
+# Per-sync conflict report; keep it only while reviewing a sync
+.sync-conflicts.md

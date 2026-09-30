@@ -2,7 +2,7 @@
 
 English | [中文](README.zh-CN.md)
 
-[Matt Pocock's engineering skills](https://github.com/mattpocock/skills) — grilling, spec/ticket flows, TDD, code review, domain modelling — adapted for [DeepSeek Harness (dsh)](https://github.com/deepseek-harness). 25 skills, one install, every dsh session.
+[Matt Pocock's engineering skills](https://github.com/mattpocock/skills) — grilling, spec/ticket flows, TDD, code review, domain modelling — adapted for [DeepSeek Harness (dsh)](https://github.com/deepseek-harness). 27 skills, one install, every dsh session.
 
 The bodies were rewritten for dsh's tool surface (`skill`, `subagent`, session commands) rather than Claude Code's; skill names and descriptions stay identical to upstream. See [PROVENANCE.md](PROVENANCE.md) for the pinned upstream commit and the per-skill adaptation log.
 
@@ -46,8 +46,6 @@ Flags: `--user-agents` (install to `~/.agents/skills` instead — shared with ot
 
 Rank 400 (`~/.dsh/skills`) shadows an older copy of the same names in `~/.agents/skills` (rank 500), so this pack wins over any pre-existing upstream install. Use one channel; if you install both, the bundle and the directory copy will tie within the same layer.
 
-> **Windows troubleshooting**: if `dsh plugin` reports `pnpm not found` / `'pnpm' 不是内部或外部命令` although `where pnpm` finds it, your `PATH` is too long — `cmd.exe` ignores entries deep in a long `PATH` when resolving commands. Move pnpm's directory (`npm prefix -g`) earlier in `PATH` (or prune duplicate/stale entries), or run dsh through pnpm (`pnpm dsh plugin …` from a pnpm-enabled workspace), which prepends pnpm's directory for its children.
-
 ### Option 3 — just ask your agent
 
 Tell any dsh session:
@@ -68,16 +66,19 @@ Add to `$DSH_HOME/cordis.patch.yml` (the row's config is replaced whole, so rest
 
 Or, for a web-profile preset that carries the skills: copy this repo's `skills/` into your preset directory and give that preset's `skill-filesystem` row `customSkillDirs: [!!js "process.getBuiltinModule('node:url').fileURLToPath(new URL('skills/', baseUrl))"]` — `baseUrl` is the preset's own directory.
 
-## The 25 skills
+## The 27 skills
 
 **Flows (user-invoked — type `/name`)**
 
 | Skill | What it does |
 |---|---|
 | `ask-matt` | Router: which skill or flow fits your situation |
-| `grill-me` / `grill-with-docs` | Relentless interview to sharpen a plan; the docs variant persists to CONTEXT.md + ADRs |
+| `grill-me` / `grill-with-docs` | Relentless interview to sharpen a plan; the docs variant persists to GLOSSARY.md + ADRs |
 | `to-spec` / `to-tickets` | Synthesize the conversation into a spec / tracer-bullet tickets with blocking edges |
 | `implement` | Build a spec or ticket, driving TDD and ending in code review |
+| `implement-spec` | Build a whole spec in one run: tickets as a task graph, implementer subagents across the ready frontier, one integration branch |
+| `pr` | Write the PR body (template adapted from Dex Horthy's `show-me` skill) |
+| `retro` | Run a retrospective on a coding session and propose environment improvements |
 | `triage` | Move issues and external PRs through a triage state machine |
 | `wayfinder` | Chart a huge foggy effort as decision tickets on the tracker |
 | `improve-codebase-architecture` | Scan for deepening opportunities, HTML report, then grill the pick |
@@ -89,17 +90,31 @@ Or, for a web-profile preset that carries the skills: copy this repo's `skills/`
 
 **Disciplines (model-invoked — the agent reaches for them, or you can ask by name)**
 
-`grilling`, `tdd`, `code-review`, `domain-modeling`, `codebase-design`, `prototype`, `research`, `diagnosing-bugs`, `resolving-merge-conflicts`, `wizard`, `writing-for-agents`.
+`grilling`, `tdd`, `code-review`, `domain-modeling`, `codebase-design`, `prototype`, `research`, `diagnosing-bugs`, `wizard`, `writing-for-agents`.
 
 Start with `/ask-matt` after running `/setup-matt-pocock-skills` once in your repo.
+
+> Upstream dropped `resolving-merge-conflicts` after v1.2.3, so it is not part of this pack.
 
 ## Development
 
 ```sh
-node scripts/lint-skills.mjs   # validate every skill against the dsh format
+node scripts/verify-skills.mjs   # frontmatter contract + adaptation checks
 ```
 
-Re-syncing from upstream is documented in [PROVENANCE.md](PROVENANCE.md).
+## Syncing from upstream
+
+```sh
+node scripts/sync-upstream.mjs --ours skills --out skills --baseline <sha> --to <sha|HEAD>
+```
+
+The script shallow-fetches both upstream commits, three-way merges every promoted
+skill (`ours` = this pack, `base` = the pinned commit, `theirs` = the target),
+re-applies the adaptation rules, and writes `.sync-conflicts.md` listing every
+block it resolved by taking upstream's side. Review that file, then run
+`verify-skills.mjs`. `--prune` also removes skills upstream dropped. The rules
+themselves live in the script; [PROVENANCE.md](PROVENANCE.md) explains why each
+one exists.
 
 ## License
 
